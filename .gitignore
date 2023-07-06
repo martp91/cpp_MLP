@@ -1,0 +1,36 @@
+# Compiled object files
+*.o
+*.obj
+
+# Compiled executables
+*.exe
+*.out
+
+# Build directory
+/build/
+
+# Dependency files
+*.d
+
+# IDE or editor-specific files (uncomment the lines for your specific use)
+# .vscode/
+# .idea/
+# *.suo
+# *.user
+# *.sdf
+# *.opensdf
+# *.cproject
+# *.project
+
+# Generated files
+/CMakeLists.txt.user
+/CMakeCache.txt
+/CMakeFiles/
+/Makefile
+
+# macOS specific files
+.DS_Store
+
+# Windows thumbnail cache files
+Thumbs.db
+

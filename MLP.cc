@@ -7,20 +7,20 @@ MLP::MLP(int number_of_layers, int layer_sizes,
 	input_dim_ = input_dim;
 	output_dim_ = output_dim;
 	input_layer_.reserve(input_dim_);
-	vector<float> output_layer_(output_dim_); //This needs to be set like this to init size...
+	vector<double> output_layer_(output_dim_); //This needs to be set like this to init size...
 	
 	//Nodes holds all the forward propagated node values
 	//1 vector for every layer (including input and output)
 	nodes_.push_back(input_layer_);
 	for (int i =0; i < number_of_layers_; i++) {
-		vector<float> hidden_layer(layer_sizes_);
+		vector<double> hidden_layer(layer_sizes_);
 		nodes_.push_back(hidden_layer);
 	}
 
 	nodes_.push_back(output_layer_);
 }
 
-void MLP::LoadWeights(const char* bias_filename, const char* weights_filename) {
+void MLP::LoadWeights(const char* weights_filename) {
 
 	//Load weights from two txt files
 	//Both txt files, just contain the weights in a standard ordered 1 column
@@ -31,13 +31,13 @@ void MLP::LoadWeights(const char* bias_filename, const char* weights_filename) {
 		layer_sizes_*output_dim_;
 
 
-	ifstream bias_file(bias_filename);
+//	ifstream bias_file(bias_filename);
 	ifstream weights_file(weights_filename);
 
-	float tmp;
+	double tmp;
 
 	for (int i = 0; i < nbias; i++) {
-		bias_file >> tmp;
+		weights_file >> tmp;
 		biass_.push_back(tmp);
 	}
 
@@ -46,11 +46,17 @@ void MLP::LoadWeights(const char* bias_filename, const char* weights_filename) {
 		weights_.push_back(tmp);
 	}
 
-	
 }
 
+vector<double> MLP::GetBiass(){
+	return biass_;
+}
 
-vector<float> MLP::Predict(vector<float> X) {
+vector<double> MLP::GetWeights(){
+	return weights_;
+}
+
+vector<double> MLP::Predict(vector<double> X) {
 	//Predict trace (or signal) based on input X 
 	//X contains typically, lgE, cos_theta, Xmax, r, cos_psi
 	//
@@ -58,13 +64,13 @@ vector<float> MLP::Predict(vector<float> X) {
 
 	nodes_[0] = X;
 	//Loop over layers /
-	float output;
+	double output;
 	int n = 0;	
 	int m = 0;
 	//Matrix multiplications for every layer: y = tanh(w*X+b)
 	int nloops = nodes_.size() - 1;
-	vector<float> this_layer;
-	vector<float> next_layer;
+	vector<double> this_layer;
+	vector<double> next_layer;
 	int this_layer_size;
 	int next_layer_size;
 	for (int i = 0; i <  nloops; i++){

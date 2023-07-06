@@ -1,4 +1,6 @@
 //MLP c++
+#ifndef MLP_H
+#define MLP_H
 
 #include <math.h>
 #include <vector>
@@ -18,17 +20,21 @@ class MLP {
 				int input_dim, int output_dim);	
 		~MLP();
 
-		vector<float> Predict(vector<float> X);
-		void LoadWeights(const char* bias_file, const char* weights_file);
+		vector<double> Predict(vector<double> X);
+		void LoadWeights(const char* weights_file);
+		vector<double> GetBiass();
+		vector<double> GetWeights();
 
 	private:
 		unsigned int number_of_layers_;
 		unsigned int layer_sizes_;
 		unsigned int input_dim_;
 		unsigned int output_dim_;
-		vector<float> biass_;
-		vector<float> weights_;
-		vector<vector<float>> nodes_;
-		vector<float> input_layer_;
+		vector<double> biass_;
+		vector<double> weights_;
+		vector<vector<double>> nodes_;
+		vector<double> input_layer_;
 
 };
+
+#endif
